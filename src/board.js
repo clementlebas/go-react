@@ -8,7 +8,7 @@ class Board extends React.Component {
       className,
       isClickable,
       values,
-      changeValues,
+      addValues,
       deleteValue,
     } = this.props;
 
@@ -30,7 +30,7 @@ class Board extends React.Component {
                         row={row}
                         col={col}
                         value={values && values[row][col]}
-                        changeValue={() => changeValues(row, col)}
+                        addValue={() => addValues(row, col)}
                         deleteValue={(e) => deleteValue(e, row, col)}
                       >
                       </Square>

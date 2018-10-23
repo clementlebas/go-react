@@ -6,6 +6,7 @@ html {
 body {
   height: 100%;
   width: 100%;
+  background-image: url("./img/lino.jpg");
 }
 
 #root {
@@ -23,20 +24,29 @@ body {
 }
 
 .notClickable{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 50px;
+  width: 52px;
   text-align: center;
-  width: 50px;
-  display: inline-block;
-}
+  display: block;
+  box-shadow: 
+    1px 0 0 0 black,
+    0 1px 0 0 black,
+    1px 1px 0 0 black,
+    1px 0 0 0 black inset,
+    0 1px 0 0 black inset;
+} 
 
 .clickable{
-  border: 1px dashed #999;
+  border: 1px dashed transparent;
   height: 50px;
+  width: 50px;
   text-align: center;
   vertical-align: middle;
-  width: 50px;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
 }
 
 .clickable:hover{
@@ -44,30 +54,31 @@ body {
   opacity: 0.8;
 }
 
-
 .hiddenBoard{
   position: absolute;
-  /*margin-left: -25px;*/ 
   margin-top: -40px;
-  color: black;
   text-align: center;
 }
 
-
 .frontBoard{
   margin: 40px;
-  
+  padding-bottom: 1px; 
+  background-image: url("./img/wood_plank.jpg");
 }
-
-
 
 .line{
   height: 50px;
+  display: flex;
 }
 
 .gameButton{
   margin: 10px;
   bottom: 0;
+}
+
+.stone{
+  width: 30px;
+  height: 30px;
 }
 
 

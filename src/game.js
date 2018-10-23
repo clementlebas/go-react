@@ -1,8 +1,8 @@
 import React from 'react';
-
 import Board from './board';
 
-// TODO: style
+// TODO: factoriser
+// TODO: proptypes
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -18,26 +18,36 @@ class Game extends React.Component {
     }
   }
 
+
   buildGoban = size => Array(size).fill(Array(size).fill(null));
-   
-  changeValues = (row, col) => {
+
+  valueSelected = (row, col, newValue) => {
+
+    const {values} = this.state;
+
+    return [
+      ...values.slice(0, row),
+      [
+        ...values[row].slice(0, col),
+        newValue,
+        ...values[row].slice(col + 1),
+      ],
+      ...values.slice(row + 1),
+    ]
+  }
+
+  addValues = (row, col) => {
     const {values, blackIsNext} = this.state;
 
     if (values[row][col]) return;
 
-    const nextValue = blackIsNext ? 'O' : 'X';
+    const nextValue = blackIsNext ? 'W' : 'B';
 
-    this.setState({values: [
-      ...values.slice(0, row),
-      [
-        ...values[row].slice(0, col),
-        nextValue,
-        ...values[row].slice(col + 1),
-      ],
-      ...values.slice(row + 1),
-    ],
-    isSkip: false,
-  });
+    this.setState({
+      values: this.valueSelected(row, col, nextValue),
+      isSkip: false,
+    });
+
     this.changePlayer();
   }
 
@@ -69,17 +79,8 @@ class Game extends React.Component {
 
   deleteValue = (e, row, col) => {
     e.preventDefault();
-    const {values} = this.state;
 
-    this.setState({values: [
-      ...values.slice(0, row),
-      [
-        ...values[row].slice(0, col),
-        null,
-        ...values[row].slice(col + 1),
-      ],
-      ...values.slice(row + 1),
-    ]});
+    this.setState({values: this.valueSelected(row, col, null)});
   }
 
   skipTurn = () => {
@@ -98,13 +99,14 @@ class Game extends React.Component {
     const {values, size} = this.state;
 
     return (
+
       <div className='game'>
         <Board
           className='hiddenBoard'
           size={size}
-          isClickable={true}
+          isClickable
           values={values}
-          changeValues={this.changeValues}
+          addValues={this.addValues}
           deleteValue={this.deleteValue}
         />
         <Board
