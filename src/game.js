@@ -1,7 +1,6 @@
 import React from 'react';
 import Board from './board';
 
-// TODO: factoriser
 // TODO: proptypes
 class Game extends React.Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class Game extends React.Component {
 
   buildGoban = size => Array(size).fill(Array(size).fill(null));
 
-  valueSelected = (row, col, newValue) => {
+  updateValue = (row, col, newValue) => {
 
     const {values} = this.state;
 
@@ -36,7 +35,7 @@ class Game extends React.Component {
     ]
   }
 
-  addValues = (row, col) => {
+  addStone = (row, col) => {
     const {values, blackIsNext} = this.state;
 
     if (values[row][col]) return;
@@ -44,7 +43,7 @@ class Game extends React.Component {
     const nextValue = blackIsNext ? 'W' : 'B';
 
     this.setState({
-      values: this.valueSelected(row, col, nextValue),
+      values: this.updateValue(row, col, nextValue),
       isSkip: false,
     });
 
@@ -77,10 +76,10 @@ class Game extends React.Component {
     })
   }
 
-  deleteValue = (e, row, col) => {
+  removeStone = (e, row, col) => {
     e.preventDefault();
 
-    this.setState({values: this.valueSelected(row, col, null)});
+    this.setState({values: this.updateValue(row, col, null)});
   }
 
   skipTurn = () => {
@@ -106,8 +105,8 @@ class Game extends React.Component {
           size={size}
           isClickable
           values={values}
-          addValues={this.addValues}
-          deleteValue={this.deleteValue}
+          addStone={this.addStone}
+          removeStone={this.removeStone}
         />
         <Board
           className='frontBoard'

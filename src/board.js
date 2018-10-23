@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from './square';
+import PropTypes from 'prop-types';
 
 class Board extends React.Component {
   render() {
@@ -8,13 +9,13 @@ class Board extends React.Component {
       className,
       isClickable,
       values,
-      addValues,
-      deleteValue,
+      addStone,
+      removeStone,
     } = this.props;
-
+    
     const squareClass = isClickable ? 'clickable' : 'notClickable';
-
-
+    
+    
     return(
       <div className={className}>
           {
@@ -27,11 +28,9 @@ class Board extends React.Component {
                       <Square 
                         className={squareClass} 
                         key={col}
-                        row={row}
-                        col={col}
                         value={values && values[row][col]}
-                        addValue={() => addValues(row, col)}
-                        deleteValue={(e) => deleteValue(e, row, col)}
+                        addStone={() => addStone(row, col)}
+                        removeStone={(e) => removeStone(e, row, col)}
                       >
                       </Square>
                     )
@@ -45,5 +44,18 @@ class Board extends React.Component {
     )
   }
 }
+
+Board.defaultProps = {
+  isClickable: false,
+};
+
+Board.propTypes = {
+  size: PropTypes.number.isRequired,
+  className: PropTypes.string,
+  isClickable: PropTypes.bool,
+  values: PropTypes.array,
+  addStone: PropTypes.func,
+  removeStone: PropTypes.func,
+};
 
 export default Board;
